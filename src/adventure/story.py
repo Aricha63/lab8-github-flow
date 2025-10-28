@@ -1,5 +1,7 @@
 from adventure.utils import read_events_from_file
 import random
+from rich import print
+from rich.console import Console
 
 default_message = "You stand still, unsure what to do. The forest swallows you."
 
@@ -11,20 +13,21 @@ def step(choice: str, events):
     elif choice == "right":
         return right_path(random_event)
     else:
-        return default_message
+        return "[i]You stand still, unsure what to do. The forest swallows you.[/i]"
 
 def left_path(event):
-    return "You walk left. " + event
+    return "[i]You walk [blue]left[/blue]. " + event + "[/i]"
 
 def right_path(event):
-    return "You walk right. " + event
+    return "[i]You walk [red]right[/red]. " + event + "[/i]"
 
 if __name__ == "__main__":
+    console = Console()
     events = read_events_from_file('events.txt')
 
-    print("You wake up in a dark forest. You can go left or right.")
+    print("[i]You wake up in a dark forest. You can go [b blue]left[/b blue] or [b red]right[/b red][/i].")
     while True:
-        choice = input("Which direction do you choose? (left/right/exit): ")
+        choice = console.input("[b]Which direction do you choose?[/b] ([b blue]left[/b blue]/[b red]right[/b red]/[b purple]exit[/b purple]): ")
         choice = choice.strip().lower()
         if choice == 'exit':
             break
